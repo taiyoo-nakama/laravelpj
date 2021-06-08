@@ -6,19 +6,19 @@ use Illuminate\Http\Request;
 
 class HelloController extends Controller
 {
-    public function index()
+   //**Register any application services.
+    public function index(Request $request)
     {
-        $data = [
-            'content' => '自由に入力してください',
-        ];
-        return view('hello.index', $data);
+        return view('hello.index',['txt'=>'フォームを入力']);
     }
     public function post(Request $request)
     {
-        $content = $request->content;
-        $data = [
-            'content' => $content.'とにゅうりょくしましたね'
+        $validate_rule = [
+            'name'=>'repuired',
+            'email'=>'email',
+            'age'=>'numeric|between:0,150'
         ];
-        return view('hello.index',$data);
+        $this->validate($request,$validate_rule);
+        return view('hello.index',['txt'=>'正しい入力です']);
     }
 }
